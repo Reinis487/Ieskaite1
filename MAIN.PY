@@ -30,25 +30,34 @@ class Receipt:
 
     def save_to_file(self):
         filename = f"receipt_{self.client_name}.txt"
-        with open(filename, 'w') as file:
-            file.write("Rēķins\n")
-            file.write("Izveidošanas laiks: {}\n".format(self.creation_time))
-            file.write("Klienta vārds: {}\n".format(self.client_name))
-            file.write("Veltījums: {}\n".format(self.dedication))
-            file.write("Lādītes izmērs: {} mm x {} mm x {} mm\n".format(self.width, self.length, self.height))
-            file.write("Kopējā summa: {:.2f} EUR\n".format(self.total_amount))
-        print(f"Rēķins saglabāts failā: {filename}")
+        try:
+            with open(filename, 'w', encoding='utf-8') as file:
+                file.write("Rēķins\n")
+                file.write("Izveidošanas laiks: {}\n".format(self.creation_time))
+                file.write("Klienta vārds: {}\n".format(self.client_name))
+                file.write("Veltījums: {}\n".format(self.dedication))
+                file.write("Lādītes izmērs: {} mm x {} mm x {} mm\n".format(self.width, self.length, self.height))
+                file.write("Kopējā summa: {:.2f} EUR\n".format(self.total_amount))
+            print(f"Rēķins saglabāts failā: {filename}")
+        except Exception as e:
+            print(f"Kļūda saglabājot failā: {e}")
 
 def main():
     print("Šī programma ļauj izveidot rēķinus koka lādīšu pasūtījumiem.")
     
     client_name = input("Ievadiet klienta vārdu: ")
     dedication = input("Ievadiet veltījuma tekstu: ")
-    width = int(input("Ievadiet lādītes platumu (mm): "))
-    length = int(input("Ievadiet lādītes garumu (mm): "))
-    height = int(input("Ievadiet lādītes augstumu (mm): "))
-    material_price = float(input("Ievadiet kokmateriāla cenu (EUR/m2): "))
     
+    while True:
+        try:
+            width = int(input("Ievadiet lādītes platumu (mm): "))
+            length = int(input("Ievadiet lādītes garumu (mm): "))
+            height = int(input("Ievadiet lādītes augstumu (mm): "))
+            material_price = float(input("Ievadiet kokmateriāla cenu (EUR/m2): "))
+            break  # Ja viss ir kārtībā, pārtraucam ciklu
+        except ValueError:
+            print("Lūdzu, ievadiet derīgas skaitliskas vērtības.")
+
     receipt = Receipt(client_name, dedication, width, length, height, material_price)
     
     receipt.print_receipt()
