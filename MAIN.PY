@@ -54,7 +54,7 @@ def main():
             length = int(input("Ievadiet lādītes garumu (mm): "))
             height = int(input("Ievadiet lādītes augstumu (mm): "))
             material_price = float(input("Ievadiet kokmateriāla cenu (EUR/m2): "))
-            break  # Ja viss ir kārtībā, pārtraucam ciklu
+            break  # Ja viss ir kārtībā, beidz ciklu
         except ValueError:
             print("Lūdzu, ievadiet derīgas skaitliskas vērtības.")
 
